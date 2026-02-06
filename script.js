@@ -6,12 +6,12 @@ preco: 120,
 imagem: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7"
 },
 {
-nome: "Rosas Vermelhas",
-preco: 150,
+nome: "Buque de Girasol",
+preco: 30,
 imagem: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7"
 },
 {
-nome: "Lírios Brancos",
+nome: "Buque de noiva",
 preco: 110,
 imagem: "https://images.unsplash.com/photo-1591886960571-74d43a9d4166"
 },
