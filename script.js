@@ -3,107 +3,52 @@ const produtos = [
 {
 nome: "Buquê Primavera",
 preco: 120,
-imagem: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7"
+imagem: "imagens/buque_8.jpg"
 },
 {
 nome: "Buque de Girasol",
 preco: 30,
-imagem: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7"
+imagem: "imagens/buque_rosa.jpg"
 },
 {
 nome: "Buque de noiva",
 preco: 110,
-imagem: "https://images.unsplash.com/photo-1591886960571-74d43a9d4166"
+imagem: "imagens/buque_8.jpg"
 },
 {
 nome: "Orquídea Elegante",
 preco: 180,
-imagem: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
+imagem: "imagens/buque_1.jpg"
 },
 {
 nome: "Girassóis Radiantes",
 preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
+imagem: "imagens/buque_2.jpg"
 },
 {
 nome: "Girassóis Radiantes",
 preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
+imagem: "imagens/buque_3.jpg"
 },
 {
 nome: "Girassóis Radiantes",
 preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
+imagem: "imagens/buque_4.jpg"
 },
 {
 nome: "Girassóis Radiantes",
 preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
+imagem: "imagens/buque_5.jpg"
 },
 {
 nome: "Girassóis Radiantes",
 preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
+imagem: "imagens/buque_6.jpg"
 },
 {
 nome: "Girassóis Radiantes",
 preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "https://images.unsplash.com/photo-1508747703725-719777637510"
-},
-{
-nome: "Buquê Delicado Rosé",
-preco: 140,
-imagem: "https://images.unsplash.com/photo-1525310072745-f49212b5ac6d"
+imagem: "imagens/buque_7.jpg"
 }
 ];
 
