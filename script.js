@@ -1,196 +1,319 @@
-/* ================= PRODUTOS ================= */
+/* ===== PRODUTOS ===== */
 const produtos = [
-{
-nome: "Buquê Primavera",
-preco: 120,
-imagem: "imagens/buque_8.jpg"
-},
-{
-nome: "Buque de Girasol",
-preco: 30,
-imagem: "imagens/buque_rosa.jpg"
-},
-{
-nome: "Buque de noiva",
-preco: 110,
-imagem: "imagens/buque_8.jpg"
-},
-{
-nome: "Orquídea Elegante",
-preco: 180,
-imagem: "imagens/buque_1.jpg"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "imagens/buque_2.jpg"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "imagens/buque_3.jpg"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "imagens/buque_4.jpg"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "imagens/buque_5.jpg"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "imagens/buque_6.jpg"
-},
-{
-nome: "Girassóis Radiantes",
-preco: 130,
-imagem: "imagens/buque_7.jpg"
-}
+  {
+    nome: "Buquê Primavera",
+    preco: 120,
+    tamanho: "Médio",
+    categoria: "Buquê",
+    descricao: "Flores coloridas que transmitem alegria e carinho.",
+    imagem: "imagens/buque_rosa.jpg"
+  },
+  {
+    nome: "Buquê de Girassol",
+    preco: 130,
+    tamanho: "Grande",
+    categoria: "Buquê",
+    descricao: "Girassóis vibrantes, ideal para iluminar o dia.",
+    imagem: "imagens/buque_1.jpg"
+  },
+  {
+    nome: "Buquê de Rosas Vermelhas",
+    preco: 150,
+    tamanho: "Médio",
+    categoria: "Buquê",
+    descricao: "Clássico romântico para momentos especiais.",
+    imagem: "imagens/buque_2.jpg"
+  },
+  {
+    nome: "Buquê Primavera",
+    preco: 120,
+    tamanho: "Médio",
+    categoria: "Buquê",
+    descricao: "Flores coloridas que transmitem alegria e carinho.",
+    imagem: "imagens/buque_3.jpg"
+  },
+  {
+    nome: "Buquê de Girassol",
+    preco: 130,
+    tamanho: "Grande",
+    categoria: "Buquê",
+    descricao: "Girassóis vibrantes, ideal para iluminar o dia.",
+    imagem: "imagens/buque_4.jpg"
+  },
+  {
+    nome: "Buquê de Rosas Vermelhas",
+    preco: 150,
+    tamanho: "Médio",
+    categoria: "Buquê",
+    descricao: "Clássico romântico para momentos especiais.",
+    imagem: "imagens/buque_5.jpg"
+  },
+  {
+    nome: "Buquê Primavera",
+    preco: 120,
+    tamanho: "Médio",
+    categoria: "Buquê",
+    descricao: "Flores coloridas que transmitem alegria e carinho.",
+    imagem: "imagens/buque_6.jpg"
+  },
+  {
+    nome: "Buquê de Girassol",
+    preco: 130,
+    tamanho: "Grande",
+    categoria: "Buquê",
+    descricao: "Girassóis vibrantes, ideal para iluminar o dia.",
+    imagem: "imagens/buque_7.jpg"
+  },
+  {
+    nome: "Buquê de Rosas Vermelhas",
+    preco: 150,
+    tamanho: "Médio",
+    categoria: "Buquê",
+    descricao: "Clássico romântico para momentos especiais.",
+    imagem: "imagens/buque_8.jpg"
+  }
 ];
 
-/* ================= CARRINHO ================= */
+/* ===== ESTADOS ===== */
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+let produtoSelecionado = null;
+let frete = 0;
 
-const lista = document.getElementById("lista-produtos");
+/* ===== ELEMENTOS ===== */
+const listaProdutos = document.getElementById("lista-produtos");
+const modal = document.getElementById("modalProduto");
+const listaFavoritos = document.getElementById("listaFavoritos");
 
-produtos.forEach((produto, index)=>{
-lista.innerHTML += `
-<div class="card">
-<img src="${produto.imagem}">
-<h3>${produto.nome}</h3>
-<p>R$ ${produto.preco}</p>
-<button onclick="adicionar(${index})">Adicionar ao carrinho</button>
-</div>
-`;
+/* ===== RENDER PRODUTOS ===== */
+function renderProdutos() {
+  listaProdutos.innerHTML = "";
+
+  produtos.forEach((p, i) => {
+    listaProdutos.innerHTML += `
+      <div class="card" onclick="abrirProduto(${i})">
+        <img src="${p.imagem}">
+        <h3>${p.nome}</h3>
+        <p>R$ ${p.preco}</p>
+
+        <button onclick="event.stopPropagation(); adicionarCarrinho(${i})">
+          Comprar
+        </button>
+
+        <button class="btn-like ${favoritos.includes(i) ? "ativo" : ""}"
+          onclick="event.stopPropagation(); curtir(${i})">
+          ❤️
+        </button>
+      </div>
+    `;
+  });
+}
+
+/* ===== MODAL PRODUTO ===== */
+function abrirProduto(index) {
+  const p = produtos[index];
+  produtoSelecionado = index;
+
+  modal.classList.add("ativo");
+  modalImagem.src = p.imagem;
+  modalNome.textContent = p.nome;
+  modalDescricao.textContent = p.descricao;
+  modalTamanho.textContent = p.tamanho;
+  modalCategoria.textContent = p.categoria;
+  modalPreco.textContent = p.preco;
+}
+
+function fecharProduto() {
+  modal.classList.remove("ativo");
+}
+
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) fecharProduto();
 });
 
-function salvarCarrinho(){
-localStorage.setItem("carrinho", JSON.stringify(carrinho));
+function comprarDoModal() {
+  if (produtoSelecionado === null) return;
+  adicionarCarrinho(produtoSelecionado);
+  fecharProduto();
 }
 
-function adicionar(index){
-carrinho.push(produtos[index]);
-salvarCarrinho();
+/* ===== CARRINHO ===== */
+function adicionarCarrinho(index) {
+  carrinho.push(produtos[index]);
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  atualizarCarrinho();
+}
+
+function atualizarCarrinho() {
+  const ul = document.getElementById("itensCarrinho");
+  ul.innerHTML = "";
+  let total = 0;
+
+  carrinho.forEach((item, i) => {
+    ul.innerHTML += `
+      <li>
+        ${item.nome} - R$ ${item.preco}
+        <button onclick="removerCarrinho(${i})">❌</button>
+      </li>
+    `;
+    total += item.preco;
+  });
+
+  document.getElementById("contador").textContent = carrinho.length;
+  document.getElementById("total").textContent = total;
+  atualizarCheckout();
+}
+
+function removerCarrinho(index) {
+  carrinho.splice(index, 1);
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  atualizarCarrinho();
+}
+
+/* ===== FAVORITOS ===== */
+function curtir(index) {
+  if (favoritos.includes(index)) {
+    favoritos = favoritos.filter(i => i !== index);
+  } else {
+    favoritos.push(index);
+  }
+
+  localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  atualizarFavoritos();
+}
+
+function removerFavorito(indexProduto) {
+  favoritos = favoritos.filter(i => i !== indexProduto);
+  localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  atualizarFavoritos();
+}
+
+function atualizarFavoritos() {
+  document.getElementById("contador-fav").textContent = favoritos.length;
+  renderProdutos();
+  renderFavoritos();
+}
+
+function renderFavoritos() {
+  listaFavoritos.innerHTML = "";
+
+  if (favoritos.length === 0) {
+    listaFavoritos.innerHTML = "<li>Nenhum favorito ainda 💔</li>";
+    return;
+  }
+
+  favoritos.forEach(i => {
+    const p = produtos[i];
+    listaFavoritos.innerHTML += `
+      <li style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <img src="${p.imagem}" style="width:50px;height:50px;object-fit:cover;border-radius:8px">
+        <div style="flex:1">
+          <strong>${p.nome}</strong><br>
+          <small>${p.tamanho} • R$ ${p.preco}</small>
+        </div>
+        <button onclick="removerFavorito(${i})"
+          style="background:none;border:none;font-size:18px;cursor:pointer">
+          ❌
+        </button>
+      </li>
+    `;
+  });
+}
+
+/* ===== ABRIR / FECHAR ===== */
+function abrirCarrinho() {
+  document.getElementById("carrinho").classList.add("ativo");
+}
+function fecharCarrinho() {
+  document.getElementById("carrinho").classList.remove("ativo");
+}
+function abrirFavoritos() {
+  document.getElementById("favoritos").classList.add("ativo");
+  renderFavoritos();
+}
+function fecharFavoritos() {
+  document.getElementById("favoritos").classList.remove("ativo");
+}
+
+/* ===== CHECKOUT ===== */
+function irParaCheckout() {
+  if (carrinho.length === 0) return alert("Seu carrinho está vazio");
+  fecharCarrinho();
+  document.getElementById("checkout").style.display = "flex";
+}
+
+function fecharCheckout() {
+  document.getElementById("checkout").style.display = "none";
+}
+
+function calcularFrete() {
+  frete = 20;
+  document.getElementById("valorFrete").textContent = frete;
+  atualizarCheckout();
+}
+
+function atualizarCheckout() {
+  const ul = document.getElementById("resumoPedido");
+  ul.innerHTML = "";
+  let soma = 0;
+
+  carrinho.forEach(item => {
+    ul.innerHTML += `<li>${item.nome} - R$ ${item.preco}</li>`;
+    soma += item.preco;
+  });
+
+  document.getElementById("totalCheckout").textContent = soma + frete;
+}
+
+function finalizarWhatsApp() {
+  const nome = document.getElementById("nomeCliente").value.trim();
+  const endereco = document.getElementById("enderecoCliente").value.trim();
+  const cep = document.getElementById("cepCliente").value.trim();
+
+  if (!nome || !endereco || !cep) {
+    alert("Preencha nome, endereço e CEP para finalizar o pedido.");
+    return;
+  }
+
+  if (carrinho.length === 0) {
+    alert("Seu carrinho está vazio.");
+    return;
+  }
+
+  let subtotal = 0;
+
+  let mensagem =
+    "🌸 *NOVO PEDIDO - GARDEN TENT* 🌸%0A%0A" +
+    `👤 *Cliente:* ${nome}%0A` +
+    `📍 *Endereço:* ${endereco}%0A` +
+    `📮 *CEP:* ${cep}%0A%0A` +
+    "🛒 *Itens do Pedido:*%0A";
+
+  carrinho.forEach(item => {
+    mensagem += `• ${item.nome} (${item.tamanho}) - R$ ${item.preco}%0A`;
+    subtotal += item.preco;
+  });
+
+  mensagem +=
+    `%0A💰 *Subtotal:* R$ ${subtotal}` +
+    `%0A🚚 *Frete:* R$ ${frete}` +
+    `%0A💳 *Total:* R$ ${subtotal + frete}`;
+
+  // ⚠️ TELEFONE SEM ESPAÇOS OU SÍMBOLOS
+  const telefone = "5521990911804";
+
+  window.open(
+    `https://wa.me/${telefone}?text=${mensagem}`,
+    "_blank"
+  );
+
+  carrinho = [];
+  localStorage.removeItem("carrinho");
+  atualizarCarrinho();
+  fecharCheckout();
+}
+
+/* ===== INIT ===== */
+renderProdutos();
 atualizarCarrinho();
-}
-
-function remover(index){
-carrinho.splice(index,1);
-salvarCarrinho();
-atualizarCarrinho();
-}
-
-function atualizarCarrinho(){
-const listaCarrinho = document.getElementById("itensCarrinho");
-const contador = document.getElementById("contador");
-const total = document.getElementById("total");
-
-listaCarrinho.innerHTML = "";
-let soma = 0;
-
-carrinho.forEach((item, index)=>{
-listaCarrinho.innerHTML += `
-<li>
-${item.nome} - R$ ${item.preco}
-<button class="btn-remover" onclick="remover(${index})">X</button>
-</li>
-`;
-soma += item.preco;
-});
-
-contador.textContent = carrinho.length;
-total.textContent = soma;
-}
-
-function abrirCarrinho(){
-document.getElementById("carrinho").classList.add("ativo");
-}
-
-function fecharCarrinho(){
-document.getElementById("carrinho").classList.remove("ativo");
-}
-
-/* ================= CHECKOUT ================= */
-function irParaCheckout(){
-if(carrinho.length === 0){
-alert("Seu carrinho está vazio");
-return;
-}
-
-document.getElementById("carrinho").classList.remove("ativo");
-document.getElementById("checkout").style.display = "block";
-window.scrollTo(0, document.getElementById("checkout").offsetTop);
-
-const resumo = document.getElementById("resumoPedido");
-const totalCheckout = document.getElementById("totalCheckout");
-
-resumo.innerHTML = "";
-let soma = 0;
-
-carrinho.forEach(item=>{
-resumo.innerHTML += `<li>${item.nome} - R$ ${item.preco}</li>`;
-soma += item.preco;
-});
-
-totalCheckout.textContent = soma;
-}
-
-/*  FINALIZAR WHATSAPP  */
-function finalizarWhatsApp(){
-const nome = document.getElementById("nomeCliente").value;
-const endereco = document.getElementById("enderecoCliente").value;
-
-if(nome === "" || endereco === ""){
-alert("Preencha seus dados");
-return;
-}
-
-let mensagem = `Olá! Meu nome é ${nome}.%0AQuero finalizar a compra:%0A`;
-let total = 0;
-
-carrinho.forEach(item=>{
-mensagem += `- ${item.nome} (R$ ${item.preco})%0A`;
-total += item.preco;
-});
-
-mensagem += `%0ATotal: R$ ${total}%0AEndereço: ${endereco}`;
-
-window.open(
-`https://wa.me/5521990911804?text=${mensagem}`,
-"_blank"
-);
-
-carrinho = [];
-salvarCarrinho();
-atualizarCarrinho();
-}
-
-/* PIX (SIMULADO)  */
-function pagarPix(){
-alert(
-"CHAVE PIX: 21990911804\n\nApós o pagamento, envie o comprovante pelo WhatsApp."
-);
-}
-
-/*  CONTATO */
-function enviarContatoWhatsApp(event){
-event.preventDefault();
-
-const nome = document.getElementById("contatoNome").value;
-const email = document.getElementById("contatoEmail").value;
-const mensagem = document.getElementById("contatoMensagem").value;
-
-let texto = `Olá! Meu nome é ${nome}.%0AEmail: ${email}%0AMensagem: ${mensagem}`;
-
-window.open(
-`https://wa.me/5521990911804?text=${texto}`,
-"_blank"
-);
-}
-
-/*  INIT  */
-atualizarCarrinho();
+atualizarFavoritos();
