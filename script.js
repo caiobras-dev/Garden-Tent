@@ -1,5 +1,5 @@
-/*PRODUTOS */
-let produtos = JSON.parse(localStorage.getItem("produtos")) || [
+/* ===== PRODUTOS PADRÃO ===== */
+const PRODUTOS_PADRAO = [
   {
     nome: "Buquê Primavera",
     preco: 120,
@@ -74,8 +74,12 @@ let produtos = JSON.parse(localStorage.getItem("produtos")) || [
   }
 ];
 
-/* ===== Sempre atualizar localStorage com novos produtos ===== */
-localStorage.setItem("produtos", JSON.stringify(produtos));
+/* ===== CARREGAR PRODUTOS (sem sobrescrever admin) ===== */
+let produtos = JSON.parse(localStorage.getItem("produtos"));
+if (!Array.isArray(produtos) || produtos.length === 0) {
+  produtos = PRODUTOS_PADRAO;
+  localStorage.setItem("produtos", JSON.stringify(produtos));
+}
 
 /* ===== ESTADOS ===== */
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
@@ -88,6 +92,13 @@ const listaProdutos = document.getElementById("lista-produtos");
 const modal = document.getElementById("modalProduto");
 const listaFavoritos = document.getElementById("listaFavoritos");
 
+const modalImagem = document.getElementById("modalImagem");
+const modalNome = document.getElementById("modalNome");
+const modalDescricao = document.getElementById("modalDescricao");
+const modalTamanho = document.getElementById("modalTamanho");
+const modalCategoria = document.getElementById("modalCategoria");
+const modalPreco = document.getElementById("modalPreco");
+
 /* ===== RENDER PRODUTOS ===== */
 function renderProdutos() {
   listaProdutos.innerHTML = "";
@@ -95,7 +106,7 @@ function renderProdutos() {
   produtos.forEach((p, i) => {
     listaProdutos.innerHTML += `
       <div class="card" onclick="abrirProduto(${i})">
-        <img src="${p.imagem}">
+        <img src="${p.imagem}" onerror="this.src='https://picsum.photos/400?blur=2'">
         <h3>${p.nome}</h3>
         <p>R$ ${p.preco}</p>
 
@@ -119,6 +130,8 @@ function abrirProduto(index) {
 
   modal.classList.add("ativo");
   modalImagem.src = p.imagem;
+  modalImagem.onerror = () => (modalImagem.src = "https://picsum.photos/400?blur=2");
+
   modalNome.textContent = p.nome;
   modalDescricao.textContent = p.descricao;
   modalTamanho.textContent = p.tamanho;
@@ -159,7 +172,7 @@ function atualizarCarrinho() {
         <button onclick="removerCarrinho(${i})">❌</button>
       </li>
     `;
-    total += item.preco;
+    total += Number(item.preco) || 0;
   });
 
   document.getElementById("contador").textContent = carrinho.length;
@@ -207,9 +220,11 @@ function renderFavoritos() {
 
   favoritos.forEach(i => {
     const p = produtos[i];
+    if (!p) return;
+
     listaFavoritos.innerHTML += `
       <li style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-        <img src="${p.imagem}" style="width:50px;height:50px;object-fit:cover;border-radius:8px">
+        <img src="${p.imagem}" onerror="this.src='https://picsum.photos/80?blur=2'" style="width:50px;height:50px;object-fit:cover;border-radius:8px">
         <div style="flex:1">
           <strong>${p.nome}</strong><br>
           <small>${p.tamanho} • R$ ${p.preco}</small>
@@ -243,6 +258,7 @@ function irParaCheckout() {
   if (carrinho.length === 0) return alert("Seu carrinho está vazio");
   fecharCarrinho();
   document.getElementById("checkout").style.display = "flex";
+  atualizarCheckout();
 }
 
 function fecharCheckout() {
@@ -262,16 +278,17 @@ function atualizarCheckout() {
 
   carrinho.forEach(item => {
     ul.innerHTML += `<li>${item.nome} - R$ ${item.preco}</li>`;
-    soma += item.preco;
+    soma += Number(item.preco) || 0;
   });
 
   document.getElementById("totalCheckout").textContent = soma + frete;
 }
 
+/* ===== WHATSAPP ===== */
 function finalizarWhatsApp() {
-  const nome = document.getElementById("nomeCliente").value.trim();
-  const endereco = document.getElementById("enderecoCliente").value.trim();
-  const cep = document.getElementById("cepCliente").value.trim();
+  const nome = document.getElementById("nomeCliente")?.value?.trim() || "";
+  const endereco = document.getElementById("enderecoCliente")?.value?.trim() || "";
+  const cep = document.getElementById("cepCliente")?.value?.trim() || "";
 
   if (!nome || !endereco || !cep) {
     alert("Preencha nome, endereço e CEP para finalizar o pedido.");
@@ -293,7 +310,7 @@ function finalizarWhatsApp() {
 
   carrinho.forEach(item => {
     mensagem += `• ${item.nome} (${item.tamanho}) - R$ ${item.preco}%0A`;
-    subtotal += item.preco;
+    subtotal += Number(item.preco) || 0;
   });
 
   mensagem +=
@@ -322,6 +339,7 @@ function finalizarWhatsApp() {
   atualizarCarrinho();
   fecharCheckout();
 }
+
 /* ===== INIT ===== */
 renderProdutos();
 atualizarCarrinho();
