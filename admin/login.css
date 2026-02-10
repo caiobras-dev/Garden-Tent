@@ -1,0 +1,98 @@
+/* ===== LOGIN.CSS ===== */
+
+/* RESET BÁSICO */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* FUNDO */
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #f8b400, #ff6f61);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* CONTAINER LOGIN */
+.login-container {
+  background-color: #fff;
+  border-radius: 20px;
+  width: 350px;
+  max-width: 90%;
+  padding: 40px 30px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  text-align: center;
+  position: relative;
+}
+
+/* LOGO */
+.login-container h1 {
+  font-size: 28px;
+  color: #ff6f61;
+  margin-bottom: 30px;
+}
+
+/* INPUTS */
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.login-container input:focus {
+  border-color: #ff6f61;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255,111,97,0.5);
+}
+
+/* BOTÃO LOGIN */
+.login-container button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background-color: #ff6f61;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-container button:hover {
+  background-color: #f85a4f;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255,111,97,0.4);
+}
+
+/* LINKS */
+.login-container .links {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.login-container .links a {
+  color: #ff6f61;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-container .links a:hover {
+  text-decoration: underline;
+}
+
+/* RESPONSIVO */
+@media (max-width: 400px) {
+  .login-container {
+    padding: 30px 20px;
+  }
+}

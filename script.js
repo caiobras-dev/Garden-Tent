@@ -1,12 +1,13 @@
 /* ===== PRODUTOS ===== */
-const produtos = [
+/* ===== PRODUTOS ===== */
+let produtos = JSON.parse(localStorage.getItem("produtos")) || [
   {
     nome: "Buquê Primavera",
     preco: 120,
     tamanho: "Médio",
     categoria: "Buquê",
     descricao: "Flores coloridas que transmitem alegria e carinho.",
-    imagem: "imagens/buque_rosa.jpg"
+    imagem: "https://picsum.photos/400?1"
   },
   {
     nome: "Buquê de Girassol",
@@ -14,7 +15,7 @@ const produtos = [
     tamanho: "Grande",
     categoria: "Buquê",
     descricao: "Girassóis vibrantes, ideal para iluminar o dia.",
-    imagem: "imagens/buque_1.jpg"
+    imagem: "https://picsum.photos/400?2"
   },
   {
     nome: "Buquê de Rosas Vermelhas",
@@ -22,57 +23,20 @@ const produtos = [
     tamanho: "Médio",
     categoria: "Buquê",
     descricao: "Clássico romântico para momentos especiais.",
-    imagem: "imagens/buque_2.jpg"
+    imagem: "https://picsum.photos/400?3"
   },
   {
-    nome: "Buquê Primavera",
-    preco: 120,
-    tamanho: "Médio",
-    categoria: "Buquê",
-    descricao: "Flores coloridas que transmitem alegria e carinho.",
-    imagem: "imagens/buque_3.jpg"
-  },
-  {
-    nome: "Buquê de Girassol",
-    preco: 130,
-    tamanho: "Grande",
-    categoria: "Buquê",
-    descricao: "Girassóis vibrantes, ideal para iluminar o dia.",
-    imagem: "imagens/buque_4.jpg"
-  },
-  {
-    nome: "Buquê de Rosas Vermelhas",
-    preco: 150,
-    tamanho: "Médio",
-    categoria: "Buquê",
-    descricao: "Clássico romântico para momentos especiais.",
-    imagem: "imagens/buque_5.jpg"
-  },
-  {
-    nome: "Buquê Primavera",
-    preco: 120,
-    tamanho: "Médio",
-    categoria: "Buquê",
-    descricao: "Flores coloridas que transmitem alegria e carinho.",
-    imagem: "imagens/buque_6.jpg"
-  },
-  {
-    nome: "Buquê de Girassol",
-    preco: 130,
-    tamanho: "Grande",
-    categoria: "Buquê",
-    descricao: "Girassóis vibrantes, ideal para iluminar o dia.",
-    imagem: "imagens/buque_7.jpg"
-  },
-  {
-    nome: "Buquê de Rosas Vermelhas",
-    preco: 150,
-    tamanho: "Médio",
-    categoria: "Buquê",
-    descricao: "Clássico romântico para momentos especiais.",
-    imagem: "imagens/buque_8.jpg"
+    nome: "Orquídea Branca",
+    preco: 180,
+    tamanho: "Pequeno",
+    categoria: "Orquídea",
+    descricao: "Elegante e delicada para ambientes internos.",
+    imagem: "https://picsum.photos/400?4"
   }
 ];
+
+/* ===== Sempre atualizar localStorage com novos produtos ===== */
+localStorage.setItem("produtos", JSON.stringify(produtos));
 
 /* ===== ESTADOS ===== */
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
@@ -281,7 +245,6 @@ function finalizarWhatsApp() {
   }
 
   let subtotal = 0;
-
   let mensagem =
     "🌸 *NOVO PEDIDO - GARDEN TENT* 🌸%0A%0A" +
     `👤 *Cliente:* ${nome}%0A` +
@@ -299,20 +262,27 @@ function finalizarWhatsApp() {
     `%0A🚚 *Frete:* R$ ${frete}` +
     `%0A💳 *Total:* R$ ${subtotal + frete}`;
 
-  // ⚠️ TELEFONE SEM ESPAÇOS OU SÍMBOLOS
   const telefone = "5521990911804";
+  window.open(`https://wa.me/${telefone}?text=${mensagem}`, "_blank");
 
-  window.open(
-    `https://wa.me/${telefone}?text=${mensagem}`,
-    "_blank"
-  );
+  // SALVAR PEDIDO NO LOCALSTORAGE PARA ADMIN
+  let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+  pedidos.push({
+    cliente: nome,
+    endereco,
+    cep,
+    itens: [...carrinho],
+    total: subtotal + frete,
+    data: new Date().toLocaleString()
+  });
+  localStorage.setItem("pedidos", JSON.stringify(pedidos));
 
+  // Limpa carrinho
   carrinho = [];
   localStorage.removeItem("carrinho");
   atualizarCarrinho();
   fecharCheckout();
 }
-
 /* ===== INIT ===== */
 renderProdutos();
 atualizarCarrinho();

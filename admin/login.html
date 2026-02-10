@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Admin | Garden Tent</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="login-container">
+    <h1>🌸 Garden Tent</h1>
+    <form id="loginForm">
+      <input type="text" id="usuario" placeholder="Usuário" required>
+      <input type="password" id="senha" placeholder="Senha" required>
+      <button type="submit">Entrar</button>
+      <p id="erro"></p>
+    </form>
+    <div class="links">
+      <a href="../index.html">Voltar para a Loja</a>
+    </div>
+  </div>
+
+  <script>
+    // Usuários cadastrados
+    const usuarios = [
+      { nome: "administrador", senha: "gardentent123" } // usuário único por enquanto
+    ];
+
+    const loginForm = document.getElementById("loginForm");
+    const inputUsuario = document.getElementById("usuario");
+    const inputSenha = document.getElementById("senha");
+    const erroMsg = document.getElementById("erro");
+
+    // Limpa mensagem de erro ao digitar
+    inputUsuario.addEventListener("input", () => erroMsg.textContent = "");
+    inputSenha.addEventListener("input", () => erroMsg.textContent = "");
+
+    // Login
+    loginForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const usuario = inputUsuario.value.trim();
+      const senha = inputSenha.value.trim();
+
+      // Procura usuário
+      const user = usuarios.find(u => u.nome === usuario);
+
+      if (!user) {
+        erroMsg.textContent = "Usuário não encontrado!";
+        erroMsg.style.color = "#ff4d4f";
+        return;
+      }
+
+      if (user.senha === senha) {
+        localStorage.setItem("adminLogado", "true");
+        localStorage.setItem("usuarioLogado", user.nome);
+        window.location.href = "painel.html";
+      } else {
+        erroMsg.textContent = "Senha incorreta!";
+        erroMsg.style.color = "#ff4d4f";
+      }
+    });
+  </script>
+</body>
+</html>

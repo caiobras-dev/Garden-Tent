@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin | Garden Tent</title>
+  <link rel="stylesheet" href="painel.css">
+</head>
+<body>
+
+<header class="topo">
+  <h1>🌸 Painel Garden Tent</h1>
+  <div>
+    <button class="btn-loja" onclick="voltarParaLoja()">Voltar à Loja</button>
+    <button class="btn-logout" onclick="logout()">Sair</button>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Cards de estatísticas -->
+  <section class="cards">
+    <div class="card">
+      <h3>Total de Vendas</h3>
+      <p id="totalVendas">R$ 0</p>
+    </div>
+    <div class="card">
+      <h3>Pedidos</h3>
+      <p id="qtdPedidos">0</p>
+    </div>
+  </section>
+
+  <!-- Pedidos -->
+  <section class="pedidos">
+    <h2>📦 Pedidos</h2>
+    <div class="botoes-pedidos">
+      <button onclick="imprimirPedidos()">Imprimir Histórico</button>
+      <button onclick="resetarPedidos()" class="btn-reset">Resetar Histórico</button>
+    </div>
+    <ul id="listaPedidos"></ul>
+  </section>
+
+  <!-- Produtos Admin -->
+  <section class="produtosAdmin">
+    <h2>🛠 Gerenciar Produtos</h2>
+    <form id="formProduto">
+      <input type="text" id="nomeProduto" placeholder="Nome" required>
+      <input type="number" id="precoProduto" placeholder="Preço" required>
+      <input type="text" id="tamanhoProduto" placeholder="Tamanho">
+      <input type="text" id="categoriaProduto" placeholder="Categoria">
+      <input type="text" id="descricaoProduto" placeholder="Descrição">
+      <input type="text" id="imagemProduto" placeholder="URL da Imagem">
+      <button type="submit" class="btn-adicionar">Adicionar Produto</button>
+    </form>
+    <ul id="listaProdutosAdmin"></ul>
+  </section>
+
+</main>
+
+<script src="painel.js"></script>
+</body>
+</html>
