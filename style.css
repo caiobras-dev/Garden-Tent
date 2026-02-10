@@ -658,3 +658,98 @@ footer {
   transform: scale(1.05);
   box-shadow: 0 10px 25px rgba(230, 57, 115, 0.45);
 }
+/* ===== COLA ISSO NO FINAL DO SEU style.css ===== */
+
+/* 1) Garantir que tudo respeite o tamanho da tela */
+* { box-sizing: border-box; }
+html, body { width: 100%; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+
+/* 2) Header adaptável no celular */
+.header-content{
+  width: min(1100px, 92%);
+  margin: 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+nav{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.menu-acoes{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+/* 3) Grid de produtos responsivo (fica 1 coluna no celular) */
+.cards{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:18px;
+}
+
+/* 4) Cards não estourarem */
+.card{
+  width: 100%;
+  max-width: 100%;
+}
+
+/* 5) Breakpoints MOBILE */
+@media (max-width: 900px){
+  .cards{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px){
+  /* Header */
+  .logo{ font-size: 1.15rem; }
+  nav{
+    width:100%;
+    justify-content:center;
+    gap:10px;
+  }
+  nav a{ font-size:.95rem; }
+  .menu-acoes{
+    width:100%;
+    justify-content:space-between;
+  }
+
+  /* Banner */
+  .banner{ height: 220px; padding: 18px; }
+  .banner h2{ font-size: 1.4rem; }
+  .banner p{ font-size: .95rem; }
+
+  /* Produtos */
+  .produtos{ padding: 34px 5%; }
+  .cards{ grid-template-columns: 1fr; } /* 1 por linha */
+  .card img{ height: 170px; object-fit: cover; }
+
+  /* Sobre/Contato mais leves */
+  .sobre, .contato{
+    margin: 28px auto;
+    padding: 26px 6%;
+    border-radius: 16px;
+  }
+
+  /* Carrinho/Favoritos ocuparem a tela toda no celular */
+  .carrinho, .favoritos{
+    width: 100%;
+    right: -100%;
+  }
+  .carrinho.ativo, .favoritos.ativo{ right: 0; }
+
+  /* Checkout caber */
+  .checkout-box{
+    width: 92%;
+    max-width: 420px;
+  }
+}
