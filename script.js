@@ -1,5 +1,4 @@
-/* ===== PRODUTOS ===== */
-/* ===== PRODUTOS ===== */
+/*PRODUTOS */
 let produtos = JSON.parse(localStorage.getItem("produtos")) || [
   {
     nome: "Buquê Primavera",
@@ -7,7 +6,7 @@ let produtos = JSON.parse(localStorage.getItem("produtos")) || [
     tamanho: "Médio",
     categoria: "Buquê",
     descricao: "Flores coloridas que transmitem alegria e carinho.",
-    imagem: "https://picsum.photos/400?1"
+    imagem: "imagens/buque_rosa.jpg"
   },
   {
     nome: "Buquê de Girassol",
@@ -15,7 +14,7 @@ let produtos = JSON.parse(localStorage.getItem("produtos")) || [
     tamanho: "Grande",
     categoria: "Buquê",
     descricao: "Girassóis vibrantes, ideal para iluminar o dia.",
-    imagem: "https://picsum.photos/400?2"
+    imagem: "imagens/buque_1.jpg"
   },
   {
     nome: "Buquê de Rosas Vermelhas",
@@ -23,15 +22,55 @@ let produtos = JSON.parse(localStorage.getItem("produtos")) || [
     tamanho: "Médio",
     categoria: "Buquê",
     descricao: "Clássico romântico para momentos especiais.",
-    imagem: "https://picsum.photos/400?3"
+    imagem: "imagens/buque_2.jpg"
   },
   {
-    nome: "Orquídea Branca",
-    preco: 180,
-    tamanho: "Pequeno",
-    categoria: "Orquídea",
-    descricao: "Elegante e delicada para ambientes internos.",
-    imagem: "https://picsum.photos/400?4"
+    nome: "Buquê Primavera",
+    preco: 120,
+    tamanho: "Médio",
+    categoria: "Buquê",
+    descricao: "Flores coloridas que transmitem alegria e carinho.",
+    imagem: "imagens/buque_3.jpg"
+  },
+  {
+    nome: "Buquê de Girassol",
+    preco: 130,
+    tamanho: "Grande",
+    categoria: "Buquê",
+    descricao: "Girassóis vibrantes, ideal para iluminar o dia.",
+    imagem: "imagens/buque_4.jpg"
+  },
+  {
+    nome: "Buquê de Rosas Vermelhas",
+    preco: 150,
+    tamanho: "Médio",
+    categoria: "Buquê",
+    descricao: "Clássico romântico para momentos especiais.",
+    imagem: "imagens/buque_5.jpg"
+  },
+  {
+    nome: "Buquê Primavera",
+    preco: 120,
+    tamanho: "Médio",
+    categoria: "Buquê",
+    descricao: "Flores coloridas que transmitem alegria e carinho.",
+    imagem: "imagens/buque_6.jpg"
+  },
+  {
+    nome: "Buquê de Girassol",
+    preco: 130,
+    tamanho: "Grande",
+    categoria: "Buquê",
+    descricao: "Girassóis vibrantes, ideal para iluminar o dia.",
+    imagem: "imagens/buque_7.jpg"
+  },
+  {
+    nome: "Buquê de Rosas Vermelhas",
+    preco: 150,
+    tamanho: "Médio",
+    categoria: "Buquê",
+    descricao: "Clássico romântico para momentos especiais.",
+    imagem: "imagens/buque_8.jpg"
   }
 ];
 
